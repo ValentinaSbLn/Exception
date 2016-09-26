@@ -8,21 +8,20 @@ import java.util.Scanner;
 public class PinValidator {
     private int pin;
     private  boolean enterPin= false;
-    private int countEnterPin=1;
     PinValidator(int pin){
         this.pin=pin;
     }
 
     public boolean validPin() throws AccountIsLockedException {
-    int pin;
-        countEnterPin=1;
-         do {
-           if (countEnterPin <= 3) {
-                pin=enterPin();
+        int pin;
+        int countEnterPin = 1;
+        do {
+            if (countEnterPin <= 3) {
+                pin = enterPin();
                 if (this.pin == pin) {
                     enterPin = true;
                 } else {
-                    System.out.println("PIN введен неверно. У вас осталось "+ (3-countEnterPin) + " попытки(а) из 3" );
+                    System.out.println("PIN введен неверно. У вас осталось " + (3 - countEnterPin) + " попытки(а) из 3");
                     countEnterPin++;
                 }
             } else
@@ -37,8 +36,8 @@ public class PinValidator {
             System.out.println("Введите PIN");
             Scanner in = new Scanner(System.in);
             String pinStr = in.nextLine();
-
             pin = Integer.parseInt(pinStr);
+
         } catch (NumberFormatException e) {
             System.out.println("Неверный формат ввода");
             return 0;

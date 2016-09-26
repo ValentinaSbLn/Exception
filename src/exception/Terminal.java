@@ -1,12 +1,19 @@
 package exception;
 
 public interface Terminal {
-    boolean pin=false;
-
+    /**
+     * Запрос баланса
+     */
     public void printBalance() throws InvalidPinException;
-    public void takeMoney() throws InvalidPinException;
-    public void putMoney() throws InvalidPinException;
-    public boolean enterPIN(int pin);
 
+    /**
+     * Запрос к серверу на снятие наличных
+     */
+    public void takeMoney() throws InvalidPinException;
+
+    /**
+     * Запрос к серверу на пополнение счета
+     */
+    public void putMoney() throws InvalidPinException;
 
 }
