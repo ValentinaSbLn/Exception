@@ -7,12 +7,13 @@ import java.util.Scanner;
  */
 public class PinValidator {
     private int pin;
-    private  boolean enterPin= false;
-    PinValidator(int pin){
-        this.pin=pin;
+    private boolean enterPin = false;
+
+    PinValidator(int pin) {
+        this.pin = pin;
     }
 
-    public boolean validPin() throws AccountIsLockedException {
+    public boolean validatePin() throws AccountIsLockedException {
         int pin;
         int countEnterPin = 1;
         do {
@@ -21,7 +22,8 @@ public class PinValidator {
                 if (this.pin == pin) {
                     enterPin = true;
                 } else {
-                    System.out.println("PIN введен неверно. У вас осталось " + (3 - countEnterPin) + " попытки(а) из 3");
+                    new InvalidPinException();
+                    //System.out.println("PIN введен неверно. У вас осталось " + (3 - countEnterPin) + " попытки(а) из 3");
                     countEnterPin++;
                 }
             } else

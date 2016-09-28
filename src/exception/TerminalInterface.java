@@ -9,12 +9,17 @@ public class TerminalInterface {
 
 
     public static void main(String[] args) {
-        TerminalServerImpl server = new TerminalServerImpl(1245, 20000);
-        PinValidator pinValidator= new PinValidator(server.getPin());
-        TerminalImpl terminal = new TerminalImpl(server,pinValidator );
+        TerminalServerImpl server = new TerminalServerImpl();
+
+        System.out.println("Введите номер счета");
+        Scanner inAcc = new Scanner(System.in);
+        int numAccount = inAcc.nextInt();
+
+        PinValidator pinValidator = new PinValidator(server.getPin(numAccount));
+        TerminalImpl terminal = new TerminalImpl(server, pinValidator, numAccount);
 
         System.out.println("Для начала работы необходимо ввести PIN");
-        String job="y";
+        String job = "y";
         boolean b;
 
         do {

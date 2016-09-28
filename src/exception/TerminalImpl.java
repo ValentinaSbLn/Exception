@@ -12,11 +12,13 @@ import java.util.logging.Logger;
 class TerminalImpl implements Terminal {
     private final TerminalServerImpl server;
     private final PinValidator pinValidator;
+    private  final int numAccount;
     private static Logger log = Logger.getLogger(TerminalImpl.class.getName());
 
-    public TerminalImpl(TerminalServerImpl server, PinValidator pinValidator) {
+    public TerminalImpl(TerminalServerImpl server, PinValidator pinValidator, int numAccount) {
         this.server = server;
         this.pinValidator = pinValidator;
+        this.numAccount=numAccount;
         try {
             LogManager.getLogManager().readConfiguration(
                     TerminalImpl.class.getResourceAsStream("/logging.properties"));
@@ -36,7 +38,7 @@ class TerminalImpl implements Terminal {
         try {
             server.countConnect();
             if (!pinValidator.getEnterPin()) throw new InvalidPinException("Печать счета невозможна.");
-            System.out.println(server.getBalance());
+            System.out.println(server.getBalance(numAccount));
 
         } catch (InvalidPinException e) {
             log.log(Level.INFO, "InvalidPinException");
@@ -59,7 +61,7 @@ class TerminalImpl implements Terminal {
             withdraw = enterMoney();
             if (withdraw >= 0) {
                 if (withdraw % 10 == 0) {
-                    server.withdraw(withdraw);
+                    server.withdraw(numAccount,withdraw);
                 } else
                     System.out.println("ERROR: Со счета можно снимать только суммы кратные 100");
 
@@ -89,7 +91,7 @@ class TerminalImpl implements Terminal {
             deposit = enterMoney();
             if (deposit >= 0) {
                 if (deposit % 10 == 0) {
-                    server.deposit(deposit);
+                    server.deposit(numAccount,deposit);
                 } else
                     System.out.println("ERROR: На счет можно класть суммы только кратные 100");
 
@@ -105,7 +107,7 @@ class TerminalImpl implements Terminal {
     public boolean run() {
 
         try {
-            pinValidator.validPin();
+            pinValidator.validatePin();
         } catch (AccountIsLockedException e) {
             return false;
         }
